@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace TheLegends.Base.Databuckets
 {
     public static class DefaultProperties
