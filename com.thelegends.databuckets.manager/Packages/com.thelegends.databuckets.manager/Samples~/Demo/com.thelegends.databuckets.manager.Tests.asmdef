@@ -1,0 +1,16 @@
+{
+    "name": "com.thelegends.databuckets.manager.Demo",
+    "rootNamespace": "com.thelegends.databuckets.manager.Demo",
+    "references": [
+        "com.thelegends.databuckets.manager"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
