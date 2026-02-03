@@ -1,0 +1,18 @@
+{
+    "name": "com.thelegends.databuckets.manager.Editor",
+    "rootNamespace": "com.thelegends.databuckets.manager.Editor",
+    "references": [
+        "com.thelegends.databuckets.manager"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
