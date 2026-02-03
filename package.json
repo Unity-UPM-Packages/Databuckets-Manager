@@ -1,17 +1,17 @@
 {
   "name": "com.thelegends.databuckets.manager",
-  "displayName": "com.thelegends.databuckets.manager",
-  "description": "com.thelegends.databuckets.manager description goes here.",
+  "displayName": "Databuckets Manager",
+  "description": "Databuckets Manager description goes here",
   "keywords": [],
-  "version": "0.0.0",
+  "version": "1.0.0-preview.2",
   "unity": "2021.3",
-  "documentationUrl": "https://github.com/Unity-UPM-Packages/com.thelegends.databuckets.manager#documentation",
-  "changelogUrl": "https://github.com/Unity-UPM-Packages/com.thelegends.databuckets.manager/releases",
+  "documentationUrl": "https://github.com/Unity-UPM-Packages/Databuckets-Manager#documentation",
+  "changelogUrl": "https://github.com/Unity-UPM-Packages/Databuckets-Manager/releases",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "repository": "https://github.com/Unity-UPM-Packages/com.thelegends.databuckets.manager.git",
-    "url": "https://github.com/Unity-UPM-Packages/com.thelegends.databuckets.manager.git"
+    "repository": "https://github.com/Unity-UPM-Packages/Databuckets-Manager.git",
+    "url": "https://github.com/Unity-UPM-Packages/Databuckets-Manager.git"
   },
   "author": {
     "name": "Unity-UPM-Packages",
