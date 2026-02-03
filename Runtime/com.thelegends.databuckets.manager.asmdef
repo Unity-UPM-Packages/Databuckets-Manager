@@ -1,7 +1,10 @@
 {
     "name": "com.thelegends.databuckets.manager",
     "rootNamespace": "com.thelegends.databuckets.manager",
-    "references": [],
+    "references": [
+        "GUID:b9892e19a741c2c4690060e4a6416aca",
+        "GUID:531cbdd29092f6f4ba7826a7883ea2a8"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
