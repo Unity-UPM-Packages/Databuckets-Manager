@@ -1,0 +1,5 @@
+﻿<Solution>
+  <Project Path="com.thelegends.databuckets.manager.Editor.csproj" />
+  <Project Path="com.thelegends.databuckets.manager.csproj" />
+  <Project Path="com.thelegends.databuckets.manager.Tests.csproj" />
+</Solution>

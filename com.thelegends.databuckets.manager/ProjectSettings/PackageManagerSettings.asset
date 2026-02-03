@@ -35,6 +35,7 @@ MonoBehaviour:
     m_Url: https://verdaccio.thelegends.io.vn
     m_Scopes:
     - com.bfun
+    - com.thelegends
     m_IsDefault: 0
     m_Capabilities: 0
     m_ConfigSource: 4
