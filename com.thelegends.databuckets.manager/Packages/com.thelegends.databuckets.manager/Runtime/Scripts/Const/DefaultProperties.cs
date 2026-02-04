@@ -17,6 +17,7 @@ namespace TheLegends.Base.Databuckets
         // Numeric properties
         public const string IS_IAP_USER = "is_iap_user_n";
         public const string IAP_COUNT = "iap_count_n";
+        public const string RETENTION_DAY = "retention_day_n";
         public const string ACTIVE_DAY = "active_day_n";
         public const string WIN_STREAK = "win_streak_n";
         public const string LOSE_STREAK = "lose_streak_n";
