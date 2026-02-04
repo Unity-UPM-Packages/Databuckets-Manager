@@ -15,6 +15,10 @@ namespace TheLegends.Base.Databuckets
             {
                 DatabucketsTracker.EnableExceptionLogTracking();
             }
+            else
+            {
+                DatabucketsTracker.DisableExceptionLogTracking();
+            }
 
             LoadCommonPropertiesFromPrefs();
         }
@@ -78,6 +82,11 @@ namespace TheLegends.Base.Databuckets
         public void RecordEvent(string eventName, Dictionary<string, object> properties = null)
         {
             DatabucketsTracker.Record(eventName, properties);
+        }
+
+        public void RecordEventWithTiming(string eventName, Dictionary<string, object> properties, string timingProp, string startEvent)
+        {
+            DatabucketsTracker.RecordWithTiming(eventName, properties, timingProp, startEvent);
         }
 
     }
