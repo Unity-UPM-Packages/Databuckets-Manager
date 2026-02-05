@@ -66,7 +66,7 @@ namespace TheLegends.Base.Databuckets
                     string key = (string)field.GetValue(null);
                     if (key == DefaultProperties.CURRENT_LEVEL || key.EndsWith("_n"))
                     {
-                        properties.Add(key, PlayerPrefs.GetInt(key, -1));
+                        properties.Add(key, PlayerPrefs.GetInt(key, 0));
                     }
                     else
                     {
@@ -122,11 +122,10 @@ namespace TheLegends.Base.Databuckets
         {
 #if USE_DATABUCKETS
 
-            if ((PlayerPrefs.GetInt(DefaultProperties.RETENTION_DAY) == -1) && (PlayerPrefs.GetInt(DefaultProperties.RETENTION_DAY) == -1))
-            {
-                SetCommonProperty(DefaultProperties.ACTIVE_DAY, 0);
-                SetCommonProperty(DefaultProperties.RETENTION_DAY, 0);
+            string lastActiveDateStr = PlayerPrefs.GetString("last_active_date", "");
 
+            if ((PlayerPrefs.GetInt(DefaultProperties.RETENTION_DAY) == 0) && (PlayerPrefs.GetInt(DefaultProperties.RETENTION_DAY) == 0) && string.IsNullOrEmpty(lastActiveDateStr))
+            {
                 PlayerPrefs.SetString("last_active_date", DateTime.UtcNow.Date.ToString("o"));
                 PlayerPrefs.Save();
 
@@ -135,7 +134,7 @@ namespace TheLegends.Base.Databuckets
 
             DateTime lastActiveDate = DateTime.MinValue;
             DateTime currentDate = DateTime.UtcNow.Date;
-            string lastActiveDateStr = PlayerPrefs.GetString("last_active_date", "");
+            
 
             if (!string.IsNullOrEmpty(lastActiveDateStr))
             {
