@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text;
 using Databuckets;
 using TheLegends.Base.UnitySingleton;
 using UnityEngine;
@@ -24,6 +25,8 @@ namespace TheLegends.Base.Databuckets
 
             LoadCommonPropertiesFromPrefs();
             CalculateRetentionAndActiveDays();
+
+            Log("Databuckets Initialized");
 #endif
         }
 
@@ -32,6 +35,8 @@ namespace TheLegends.Base.Databuckets
 #if USE_DATABUCKETS
             DatabucketsTracker.SetCommonProperty(key, value);
             UpdateCachedProperty(key, value);
+
+            Log("Property Set: " + key + " = " + value);
 #endif
         }
 
@@ -42,6 +47,8 @@ namespace TheLegends.Base.Databuckets
             foreach (var property in properties)
             {
                 UpdateCachedProperty(property.Key, property.Value);
+
+                Log("Property Set: " + property.Key + " = " + property.Value);
             }
 #endif
         }
@@ -63,7 +70,7 @@ namespace TheLegends.Base.Databuckets
                     }
                     else
                     {
-                        properties.Add(key, PlayerPrefs.GetString(key, ""));
+                        properties.Add(key, PlayerPrefs.GetString(key, "Not Available"));
                     }
                 }
             }
@@ -91,17 +98,23 @@ namespace TheLegends.Base.Databuckets
 #endif
         }
 
-        public void RecordEvent(string eventName, Dictionary<string, object> properties = null)
+        public void RecordEvent(string eventName, Dictionary<string, object> parameters = null)
         {
 #if USE_DATABUCKETS
-            DatabucketsTracker.Record(eventName, properties);
+            DatabucketsTracker.Record(eventName, parameters);
+
+            string paramStr = GetParamsStr(parameters);
+            Log("Event Recorded: " + eventName + " | Parameters: " + paramStr);
 #endif
         }
 
-        public void RecordEventWithTiming(string eventName, Dictionary<string, object> properties, string timingProp, string startEvent)
+        public void RecordEventWithTiming(string eventName, Dictionary<string, object> parameters, string timingProp, string startEvent)
         {
 #if USE_DATABUCKETS
-            DatabucketsTracker.RecordWithTiming(eventName, properties, timingProp, startEvent);
+            DatabucketsTracker.RecordWithTiming(eventName, parameters, timingProp, startEvent);
+
+            string paramStr = GetParamsStr(parameters);
+            Log("Event With Timing Recorded: " + eventName + " | Timing Property: " + timingProp + " | Start Event: " + startEvent + " | Parameters: " + paramStr);
 #endif
         }
 
@@ -142,6 +155,49 @@ namespace TheLegends.Base.Databuckets
             }
 #endif
         }
+
+        #region Logging
+        public void Log(string message)
+        {
+            Debug.Log("Databuckets------: " + message);
+        }
+
+        public void LogWarning(string message)
+        {
+            Debug.LogWarning("Databuckets------: " + message);
+        }
+
+        public void LogError(string message)
+        {
+            Debug.LogError("Databuckets------: " + message);
+        }
+
+        public void LogException(Exception exception)
+        {
+            Debug.LogException(exception);
+        }
+
+        private string GetParamsStr(Dictionary<string, object> parameters)
+        {
+            if (parameters == null || parameters.Count == 0)
+            {
+                return "No Parameters";
+            }
+
+            var sb = new StringBuilder();
+
+            foreach (var param in parameters)
+            {
+                sb.Append(param.Key)
+                  .Append(':')
+                  .Append(param.Value)
+                  .Append(", ");
+            }
+
+            return sb.ToString();
+        }
+
+        #endregion
 
     }
 }
