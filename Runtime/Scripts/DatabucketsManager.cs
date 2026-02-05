@@ -189,7 +189,7 @@ namespace TheLegends.Base.Databuckets
             foreach (var param in parameters)
             {
                 sb.Append(param.Key)
-                  .Append(':')
+                  .Append(": ")
                   .Append(param.Value)
                   .Append(", ");
             }
