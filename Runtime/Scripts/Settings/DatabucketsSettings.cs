@@ -39,5 +39,6 @@ namespace TheLegends.Base.Databuckets
         }
 
         public bool enableExxceptionLogTracking = true;
+        public bool enableLoggingInEditor = true;
     }
 }

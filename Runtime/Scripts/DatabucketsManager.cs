@@ -13,6 +13,9 @@ namespace TheLegends.Base.Databuckets
         public void Init()
         {
 #if USE_DATABUCKETS
+
+#if !UNITY_EDITOR && ((UNITY_IOS || UNITY_ANDROID))
+
             DatabucketsTracker.Init(DatabucketsSettings.Instance.APIEndpoint, DatabucketsSettings.Instance.APIKey);
 
             if (DatabucketsSettings.Instance.enableExxceptionLogTracking)
@@ -24,11 +27,21 @@ namespace TheLegends.Base.Databuckets
                 DatabucketsTracker.DisableExceptionLogTracking();
             }
 
+
+#elif UNITY_EDITOR
+
+            if (!DatabucketsSettings.Instance.enableLoggingInEditor)
+            {
+                return;
+            }
+#endif
+
             LoadCommonPropertiesFromPrefs();
             CalculateRetentionAndActiveDays();
             InvokeRepeating(nameof(CheckConnection), 0f, 10f);
 
             Log("Databuckets Initialized");
+            
 #endif
         }
 
@@ -36,24 +49,95 @@ namespace TheLegends.Base.Databuckets
         {
 #if USE_DATABUCKETS
             DatabucketsTracker.SetCommonProperty(key, value);
-            UpdateCachedProperty(key, value);
 
+#if !UNITY_EDITOR && ((UNITY_IOS || UNITY_ANDROID))
+
+            DatabucketsTracker.SetCommonProperty(key, value);
+
+#elif UNITY_EDITOR
+
+            if (!DatabucketsSettings.Instance.enableLoggingInEditor)
+            {
+                return;
+            }
+#endif
+
+            UpdateCachedProperty(key, value);
             Log("Property Set: " + key + " = " + value);
+
 #endif
         }
 
         public void SetCommonProperties(Dictionary<string, object> properties)
         {
 #if USE_DATABUCKETS
+
+#if !UNITY_EDITOR && ((UNITY_IOS || UNITY_ANDROID))
+
             DatabucketsTracker.SetCommonProperties(properties);
+
+#elif UNITY_EDITOR
+
+            if (!DatabucketsSettings.Instance.enableLoggingInEditor)
+            {
+                return;
+            }
+
+#endif
+
             foreach (var property in properties)
             {
                 UpdateCachedProperty(property.Key, property.Value);
-
                 Log("Property Set: " + property.Key + " = " + property.Value);
             }
+
 #endif
         }
+
+        public void RecordEvent(string eventName, Dictionary<string, object> parameters = null)
+        {
+#if USE_DATABUCKETS
+
+#if !UNITY_EDITOR && ((UNITY_IOS || UNITY_ANDROID))
+
+            DatabucketsTracker.Record(eventName, parameters);
+            
+#elif UNITY_EDITOR
+
+            if (!DatabucketsSettings.Instance.enableLoggingInEditor)
+            {
+                return;
+            }
+#endif
+
+            string paramStr = GetParamsStr(parameters);
+            Log("Event Recorded: " + eventName + " | Parameters: " + paramStr);
+
+#endif
+        }
+
+        public void RecordEventWithTiming(string eventName, Dictionary<string, object> parameters, string timingProp, string startEvent)
+        {
+#if USE_DATABUCKETS
+
+#if !UNITY_EDITOR && ((UNITY_IOS || UNITY_ANDROID))
+
+            DatabucketsTracker.RecordWithTiming(eventName, parameters, timingProp, startEvent);
+
+#elif UNITY_EDITOR
+
+            if (!DatabucketsSettings.Instance.enableLoggingInEditor)
+            {
+                return;
+            }
+
+#endif
+
+            string paramStr = GetParamsStr(parameters);
+            Log("Event With Timing Recorded: " + eventName + " | Timing Property: " + timingProp + " | Start Event: " + startEvent + " | Parameters: " + paramStr);
+#endif 
+        }
+
 
         public void LoadCommonPropertiesFromPrefs()
         {
@@ -100,25 +184,6 @@ namespace TheLegends.Base.Databuckets
 #endif
         }
 
-        public void RecordEvent(string eventName, Dictionary<string, object> parameters = null)
-        {
-#if USE_DATABUCKETS
-            DatabucketsTracker.Record(eventName, parameters);
-
-            string paramStr = GetParamsStr(parameters);
-            Log("Event Recorded: " + eventName + " | Parameters: " + paramStr);
-#endif
-        }
-
-        public void RecordEventWithTiming(string eventName, Dictionary<string, object> parameters, string timingProp, string startEvent)
-        {
-#if USE_DATABUCKETS
-            DatabucketsTracker.RecordWithTiming(eventName, parameters, timingProp, startEvent);
-
-            string paramStr = GetParamsStr(parameters);
-            Log("Event With Timing Recorded: " + eventName + " | Timing Property: " + timingProp + " | Start Event: " + startEvent + " | Parameters: " + paramStr);
-#endif
-        }
 
         private void CalculateRetentionAndActiveDays()
         {
