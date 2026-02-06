@@ -54,6 +54,7 @@ namespace TheLegends.Base.Databuckets
             Instance.APIEndpoint = EditorGUILayout.TextField("API Endpoint", Instance.APIEndpoint);
             Instance.APIKey = EditorGUILayout.TextField("API Key", Instance.APIKey);
             Instance.enableExxceptionLogTracking = EditorGUILayout.Toggle("Enable Exception Log Tracking", Instance.enableExxceptionLogTracking);
+            Instance.enableLoggingInEditor = EditorGUILayout.Toggle("Enable Logging In Editor", Instance.enableLoggingInEditor);
 
             if (EditorGUI.EndChangeCheck())
             {

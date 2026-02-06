@@ -12,4 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efebf30c41c45c84481532e8e017c552, type: 3}
   m_Name: DatabucketsSettingsAsset
   m_EditorClassIdentifier: 
+  api_endpoint: https://ingest.databuckets.com/push?h=OYKJX
+  api_key: mpGIctBpxgf1UMjBTmDKDMkwUenK2WNSNF6OnRx4xbzWjJV6TPtSPuAz1wrxQa34MPqKGuxQSgYFxIxrLKnBCVdNiZwR4lw5OFdIUIoCxTYtxXWbZAYLMh5jmbspMgNc
   enableExxceptionLogTracking: 1
+  enableLoggingInEditor: 1
