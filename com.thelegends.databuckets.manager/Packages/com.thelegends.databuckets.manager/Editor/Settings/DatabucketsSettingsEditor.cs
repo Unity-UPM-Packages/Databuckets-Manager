@@ -52,7 +52,7 @@ namespace TheLegends.Base.Databuckets
             EditorGUI.BeginChangeCheck();
 
             Instance.APIEndpoint = EditorGUILayout.TextField("API Endpoint", Instance.APIEndpoint);
-            Instance.APIKey = EditorGUILayout.TextField("App ID", Instance.APIKey);
+            Instance.APIKey = EditorGUILayout.TextField("API Key", Instance.APIKey);
             Instance.enableExxceptionLogTracking = EditorGUILayout.Toggle("Enable Exception Log Tracking", Instance.enableExxceptionLogTracking);
 
             if (EditorGUI.EndChangeCheck())

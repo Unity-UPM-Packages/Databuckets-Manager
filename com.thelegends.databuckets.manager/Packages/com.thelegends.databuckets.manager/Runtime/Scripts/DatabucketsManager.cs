@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Databuckets;
 using TheLegends.Base.UnitySingleton;
+using TheLegends.Unity.Utils;
 using UnityEngine;
 
 namespace TheLegends.Base.Databuckets
@@ -25,6 +26,7 @@ namespace TheLegends.Base.Databuckets
 
             LoadCommonPropertiesFromPrefs();
             CalculateRetentionAndActiveDays();
+            InvokeRepeating(nameof(CheckConnection), 0f, 10f);
 
             Log("Databuckets Initialized");
 #endif
@@ -134,7 +136,7 @@ namespace TheLegends.Base.Databuckets
 
             DateTime lastActiveDate = DateTime.MinValue;
             DateTime currentDate = DateTime.UtcNow.Date;
-            
+
 
             if (!string.IsNullOrEmpty(lastActiveDateStr))
             {
@@ -153,6 +155,29 @@ namespace TheLegends.Base.Databuckets
                 PlayerPrefs.Save();
             }
 #endif
+        }
+
+
+        public async void CheckConnection()
+        {
+            ConnectionsUtils.GetConnectionType((connectionType) =>
+            {
+                switch (connectionType)
+                {
+                    case EConnectionsType.OFFLINE:
+                        SetCommonProperty(DefaultProperties.CONNECTION_TYPE, EConnectionsType.OFFLINE.ToString());
+                        break;
+                    case EConnectionsType.WIFI:
+                        SetCommonProperty(DefaultProperties.CONNECTION_TYPE, EConnectionsType.WIFI.ToString());
+                        break;
+                    case EConnectionsType.MOBILE_DATA:
+                        SetCommonProperty(DefaultProperties.CONNECTION_TYPE, EConnectionsType.MOBILE_DATA.ToString());
+                        break;
+                    default:
+                        SetCommonProperty(DefaultProperties.CONNECTION_TYPE, EConnectionsType.UNKNOWN.ToString());
+                        break;
+                }
+            });
         }
 
         #region Logging
