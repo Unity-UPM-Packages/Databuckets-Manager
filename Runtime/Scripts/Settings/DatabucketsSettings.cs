@@ -23,8 +23,8 @@ namespace TheLegends.Base.Databuckets
             }
         }
 
-        private string api_endpoint = "";
-        private string api_key = "";
+        public string api_endpoint = "";
+        public string api_key = "";
 
         public string APIEndpoint
         {
