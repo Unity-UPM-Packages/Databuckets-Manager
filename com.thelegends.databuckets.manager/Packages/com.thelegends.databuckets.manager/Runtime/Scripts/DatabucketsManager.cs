@@ -189,36 +189,41 @@ namespace TheLegends.Base.Databuckets
         {
 #if USE_DATABUCKETS
 
-            string lastActiveDateStr = PlayerPrefs.GetString("last_active_date", "");
+            const string LAST_ACTIVE_KEY = "last_active_date";
 
-            if ((PlayerPrefs.GetInt(DefaultProperties.RETENTION_DAY) == 0) && (PlayerPrefs.GetInt(DefaultProperties.RETENTION_DAY) == 0) && string.IsNullOrEmpty(lastActiveDateStr))
+            DateTime? lastActiveDate = DateTimeUtils.GetDateFromPrefs(LAST_ACTIVE_KEY);
+            int currentActiveDays = PlayerPrefs.GetInt(DefaultProperties.ACTIVE_DAY, 0);
+            int currentRetentionDay = PlayerPrefs.GetInt(DefaultProperties.RETENTION_DAY, 0);
+            DateTime today = DateTime.UtcNow.Date;
+
+            // Trường hợp lần đầu chạy - khởi tạo
+            if (!lastActiveDate.HasValue && currentActiveDays == 0 && currentRetentionDay == 0)
             {
-                PlayerPrefs.SetString("last_active_date", DateTime.UtcNow.Date.ToString("o"));
-                PlayerPrefs.Save();
-
+                DateTimeUtils.SaveDateToPrefs(LAST_ACTIVE_KEY, today);
                 return;
             }
 
-            DateTime lastActiveDate = DateTime.MinValue;
-            DateTime currentDate = DateTime.UtcNow.Date;
-
-
-            if (!string.IsNullOrEmpty(lastActiveDateStr))
+            // Không có ngày được lưu - trường hợp bất thường, skip
+            if (!lastActiveDate.HasValue)
             {
-                DateTime.TryParse(lastActiveDateStr, out lastActiveDate);
+                LogWarning("Last active date not found in PlayerPrefs but counters exist");
+                return;
             }
 
-            var days = currentDate.Day - lastActiveDate.Day;
-            if (days >= 1)
-            {
-                int activeDays = PlayerPrefs.GetInt(DefaultProperties.ACTIVE_DAY, 0);
-                activeDays += 1;
-                SetCommonProperty(DefaultProperties.ACTIVE_DAY, activeDays);
-                SetCommonProperty(DefaultProperties.RETENTION_DAY, PlayerPrefs.GetInt(DefaultProperties.RETENTION_DAY) + days);
+            int daysPassed = DateTimeUtils.CalculateDaysDifference(lastActiveDate.Value, today);
 
-                PlayerPrefs.SetString("last_active_date", currentDate.ToString("o"));
-                PlayerPrefs.Save();
+            if (daysPassed < 1)
+            {
+                return;
             }
+
+            int newActiveDays = currentActiveDays + 1;
+            int newRetentionDay = currentRetentionDay + daysPassed;
+
+            SetCommonProperty(DefaultProperties.ACTIVE_DAY, newActiveDays);
+            SetCommonProperty(DefaultProperties.RETENTION_DAY, newRetentionDay);
+            DateTimeUtils.SaveDateToPrefs(LAST_ACTIVE_KEY, today);
+
 #endif
         }
 
