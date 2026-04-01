@@ -3,7 +3,7 @@
   "displayName": "Databuckets Manager",
   "description": "Databuckets Manager description goes here",
   "keywords": [],
-  "version": "1.0.0-preview.15",
+  "version": "1.0.0-preview.16",
   "unity": "2021.3",
   "documentationUrl": "https://github.com/Unity-UPM-Packages/Databuckets-Manager#documentation",
   "changelogUrl": "https://github.com/Unity-UPM-Packages/Databuckets-Manager/releases",
@@ -18,7 +18,7 @@
     "url": "https://github.com/Unity-UPM-Packages"
   },
   "dependencies": {
-    "com.bfun.databuckets.sdk": "1.0.6",
+    "com.thelegends.databuckets.sdk": "1.0.6",
     "com.thelegends.unity.utils": "1.0.2"
   }
 }
